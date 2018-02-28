@@ -1,0 +1,46 @@
+{
+  "name": "filesizes",
+  "version": "0.1.0",
+  "description": "Command line utility for outputing the size of files within a given directory.",
+  "main": "index.js",
+  "bin": {
+    "filesizes": "./cli.js"
+  },
+  "scripts": {
+    "compile": "babel -d ./ src/",
+    "prepublish": "npm run compile",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanhefner/filesizes.git"
+  },
+  "keywords": [
+    "file",
+    "size",
+    "file",
+    "sizes",
+    "cli",
+    "command",
+    "line",
+    "tool",
+    "utility"
+  ],
+  "author": "Ryan Hefner <hi@ryanhefner.com> (https://www.ryanhefner.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryanhefner/filesizes/issues"
+  },
+  "homepage": "https://github.com/ryanhefner/filesizes#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1"
+  },
+  "dependencies": {
+    "chalk": "^2.3.1",
+    "cli-table": "^0.3.1",
+    "commander": "^2.14.1",
+    "gzip-size": "^4.1.0",
+    "pretty-bytes": "^4.0.2"
+  }
+}
