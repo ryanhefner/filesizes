@@ -45,9 +45,9 @@ const log = (value) => {
  * @return bool
  */
 const contentMatch = (content, rules) => {
-    return rules.find((rule) => {
-        return new RegExp(rule).test(content);
-    }) !== undefined;
+  return rules.find((rule) => {
+      return new RegExp(rule).test(content);
+  }) !== undefined;
 };
 
 
@@ -61,14 +61,14 @@ const contentMatch = (content, rules) => {
  * @return {array}
  */
 export const fileSizes = ({
-  dir,
+  dir = './',
   excludeFiles = EXCLUDED_FILES,
   excludeDirs = EXCLUDED_DIRECTORIES,
-  includeLogs = false,
   verbose = false,
 }, filesChecked = [], depth = 0) => {
   const contents = fs.readdirSync(dir);
 
+  // Filter files from contents
   const files = contents.filter((content) => {
     try {
       const stats = fs.statSync(path.join(dir, content));
@@ -81,6 +81,7 @@ export const fileSizes = ({
     }
   });
 
+  // Filter directories from contents
   const directories = contents.filter((content) => {
     try {
       const stats = fs.statSync(path.join(dir, content));
@@ -93,6 +94,7 @@ export const fileSizes = ({
     }
   });
 
+  // Add file information to filesChecked
   files.forEach((file, index) => {
     const directories = dir.split('/');
     const fileStats = fs.statSync(path.join(dir, file));
@@ -100,7 +102,7 @@ export const fileSizes = ({
       ? `${directories.splice(directories.length - depth, depth).join('/')}/${file}`
       : `${file}`;
 
-    if (includeLogs) {
+    if (verbose) {
       log(`Processing: ${fileName} - ${prettyBytes(fileStats.size)}...${index % 2 === 0 ? '—' : '|'}`)
     }
 
@@ -110,6 +112,7 @@ export const fileSizes = ({
     });
   });
 
+  // If directories exist, increase depth and iterate over each
   if (directories.length) {
     depth++;
     directories.forEach((directory) => {
@@ -117,7 +120,6 @@ export const fileSizes = ({
         dir: `${dir}/${directory}`,
         excludeFiles,
         excludeDirs,
-        includeLogs,
         verbose,
       }, filesChecked, depth);
     });

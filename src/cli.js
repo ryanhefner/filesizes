@@ -14,7 +14,7 @@ import {
   EXCLUDE_DIRECTORIES,
 } from './index';
 
-const list = (value = '') => value.split(',');
+const list = (value = '') => value.split(',').map(value => value.trim());
 
 let dirVal = './';
 
@@ -24,7 +24,7 @@ program
   .option('-f, --exclude-files [excludeFiles]', 'File names or patterns used to exclude files from the listing.', list)
   .option('-d, --exclude-dirs [excludeDirs]', 'Directory names or patterns used to exclude directories from the listing.', list)
   .option('-l, --large-file [largeFile]', 'File size that desinates a file as being too large if it meets or exceeds this value.')
-  .option('-v, --verbose', '')
+  .option('-v, --verbose', 'Output the progress while iterating over files and directories.')
   .action((dir) => {
     dirVal = dir;
   })
@@ -47,17 +47,18 @@ const fileInfo = fileSizes({
   dir: path.join(process.cwd(), dirVal),
   excludeFile: program.excludeFiles || EXCLUDE_FILES,
   excludeDirs: program.excludeDirs || EXCLUDE_DIRECTORIES,
-  includeLogs: true,
   verbose: program.verbose,
 });
 
 let totalFileSize = 0;
 let totalFileSizeGzip = 0;
 
-const stream = process.stderr;
-stream.clearLine();
-stream.cursorTo(0);
-stream.write('Rendering...');
+if (program.verbose) {
+  const stream = process.stderr;
+  stream.clearLine();
+  stream.cursorTo(0);
+  stream.write('Rendering...');
+}
 
 fileInfo.forEach((info) => {
   const fileSize = program.largeFile && info.size > program.largeFile
@@ -86,8 +87,10 @@ table.push([
   prettyBytes(totalFileSizeGzip),
 ]);
 
-stream.clearLine();
-stream.cursorTo(0);
+if (program.verbose) {
+  stream.clearLine();
+  stream.cursorTo(0);
+}
 
 console.log(table.toString());
 
