@@ -34,13 +34,13 @@
   "homepage": "https://github.com/ryanhefner/filesizes#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.1"
+    "babel-preset-env": "^1.7.0"
   },
   "dependencies": {
-    "chalk": "^2.3.1",
+    "chalk": "^3.0.0",
     "cli-table": "^0.3.1",
-    "commander": "^2.14.1",
-    "gzip-size": "^4.1.0",
-    "pretty-bytes": "^4.0.2"
+    "commander": "^4.1.1",
+    "gzip-size": "^5.1.1",
+    "pretty-bytes": "^5.3.0"
   }
 }
