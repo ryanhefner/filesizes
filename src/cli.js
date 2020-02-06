@@ -25,7 +25,7 @@ program
   .option('-d, --exclude-dirs [excludeDirs]', 'Directory names or patterns used to exclude directories from the listing.', list)
   .option('-l, --large-file [largeFile]', 'File size that desinates a file as being too large if it meets or exceeds this value.')
   .option('-v, --verbose', 'Output the progress while iterating over files and directories.')
-  .action((dir) => {
+  .action((dir = './') => {
     dirVal = dir;
   })
   .parse(process.argv);
@@ -82,9 +82,9 @@ fileInfo.forEach((info) => {
 table.push([]);
 
 table.push([
-  `Total files: ${fileInfo.length}`,
-  prettyBytes(totalFileSize),
-  prettyBytes(totalFileSizeGzip),
+  chalk.bold(`Total files: ${fileInfo.length}`),
+  chalk.bold(prettyBytes(totalFileSize)),
+  chalk.bold(prettyBytes(totalFileSizeGzip)),
 ]);
 
 if (program.verbose) {
