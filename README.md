@@ -29,10 +29,11 @@ Using this tool in your project, it returns an array for each file that include 
 #### Example
 
 ```js
-import fileSizes from 'filesizes';
+import { fileSizes } from 'filesizes';
+// const { fileSizes } = require("filesizes");
 
 const fileInfo = fileSizes();
-fileInfo.forEach(info => console.log(file.name, file.size));
+fileInfo.forEach(file => console.log(file.name, file.size));
 ```
 
 #### Options
